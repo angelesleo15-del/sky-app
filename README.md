@@ -1,6 +1,6 @@
 # Sistema de Autenticación - React + Vite
 
-Proyecto desarrollado en **React** con **Vite** para el módulo de login y registro de usuarios (**AA3_EV01**).
+Proyecto desarrollado en **React** con **Vite** para el módulo de login y registro de usuarios - GA7-220501096-AA3-EV01.
 
 ## 🚀 Scripts disponibles
 
