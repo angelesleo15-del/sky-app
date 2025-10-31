@@ -1,7 +1,7 @@
 {
   "name": "sistema-autenticacion",
   "version": "1.0.0",
-  "description": "Módulo de login y registro de usuarios - AA3_EV01",
+  "description": "Módulo de login y registro de usuarios",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -25,10 +25,13 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.2.0",
+    "autoprefixer": "^10.4.14",
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
     "globals": "^13.23.0",
+    "postcss": "^8.4.27",
+    "tailwindcss": "^3.3.3",
     "vite": "^5.3.1"
   }
 }

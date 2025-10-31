@@ -1,153 +1,179 @@
 import React, { useState } from 'react'
-import { LogIn, UserPlus, Eye, EyeOff, User } from 'lucide-react'
-import '../styles.css'
+import { LogIn, UserPlus, ShoppingCart, Package, Shield, TrendingUp } from 'lucide-react'
+import LoginForm from './LoginForm'
+import RegisterForm from './RegisterForm'
 
-function SistemaAutenticacion() {
-  const [activeTab, setActiveTab] = useState('login')
-  const [mostrarPassword, setMostrarPassword] = useState(false)
-  const [mensaje, setMensaje] = useState(null)
-  const [formData, setFormData] = useState({
-    nombre: '',
-    correo: '',
-    password: ''
-  })
+export default function SistemaAutenticacion({ onLoginSuccess }) {
+  const [vista, setVista] = useState('login')
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
+  const handleLogin = (datos) => {
+    onLoginSuccess?.(datos)
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-
-    if (!formData.correo || !formData.password) {
-      setMensaje({ tipo: 'error', texto: 'Por favor, completa todos los campos.' })
-      return
-    }
-
-    if (activeTab === 'login') {
-      setMensaje({ tipo: 'exito', texto: `Bienvenido de nuevo, ${formData.correo}` })
-    } else {
-      if (!formData.nombre) {
-        setMensaje({ tipo: 'error', texto: 'El nombre es obligatorio para registrarse.' })
-        return
-      }
-      setMensaje({ tipo: 'exito', texto: `Usuario registrado: ${formData.nombre}` })
-    }
-
-    // Limpia el formulario
-    setFormData({ nombre: '', correo: '', password: '' })
+  const handleRegister = (datos) => {
+    onLoginSuccess?.(datos)
   }
 
   return (
-    <div className="main-container">
-      <div className="auth-container">
-        {/* PANEL LATERAL */}
-        <div className="side-panel">
-          <h1>SKY</h1>
-          <p>BIENVENIDO</p>
-
-          <div className="feature-list">
-            <div className="feature-item">
-              <div className="feature-icon">💜</div>
-              <span>Diseño moderno</span>
-            </div>
-            <div className="feature-item">
-              <div className="feature-icon">🔒</div>
-              <span>Seguridad garantizada</span>
-            </div>
-            <div className="feature-item">
-              <div className="feature-icon">⚡</div>
-              <span>Rendimiento optimizado con Vite</span>
-            </div>
+    <div style={{
+      minHeight: '100vh',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '40px 20px',
+      background: 'linear-gradient(135deg, #C8A2C8 0%, #8A2BE2 100%)',
+      fontFamily: 'Montserrat, sans-serif'
+    }}>
+      <div style={{
+        background: 'white',
+        borderRadius: '12px',
+        boxShadow: '0 4px 24px rgba(0, 0, 0, 0.15)',
+        overflow: 'hidden',
+        maxWidth: '900px',
+        width: '100%',
+        display: 'flex',
+        flexWrap: 'wrap'
+      }}>
+        {/* Panel lateral morado */}
+        <div style={{
+          background: 'linear-gradient(135deg, #8A2BE2 0%, #6A1DB2 100%)',
+          padding: '40px 30px',
+          color: 'white',
+          flex: '1',
+          minWidth: '300px',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center'
+        }}>
+          <h1 style={{
+            fontSize: '2rem',
+            marginBottom: '16px',
+            fontWeight: '800',
+            fontFamily: 'Montserrat, sans-serif'
+          }}>
+            SKY
+          </h1>
+          <p style={{
+            fontSize: '1.1rem',
+            marginBottom: '30px',
+            opacity: '0.95',
+            fontFamily: 'Montserrat, sans-serif'
+          }}>
+            Accede a tu cuenta o crea una para adquirir los mejores productos del mercado.
+          </p>
+          
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            {[
+              { icon: <ShoppingCart size={20} />, text: 'Carrito de compras' },
+              { icon: <Package size={20} />, text: 'Gestión de productos' },
+              { icon: <TrendingUp size={20} />, text: 'Análisis de ventas' },
+              { icon: <Shield size={20} />, text: 'Seguridad garantizada' }
+            ].map((item, idx) => (
+              <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <div style={{
+                  width: '40px',
+                  height: '40px',
+                  background: 'rgba(255, 255, 255, 0.2)',
+                  borderRadius: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  {item.icon}
+                </div>
+                <span style={{ fontFamily: 'Montserrat, sans-serif' }}>{item.text}</span>
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* PANEL DE FORMULARIO */}
-        <div className="form-panel">
-          <div className="tabs">
+        {/* Panel de formularios */}
+        <div style={{ flex: '1', minWidth: '300px' }}>
+          {/* Pestañas */}
+          <div style={{
+            display: 'flex',
+            gap: '8px',
+            backgroundColor: '#f5f5f5',
+            borderRadius: '8px',
+            padding: '4px',
+            margin: '30px 30px 0 30px'
+          }}>
             <button
-              className={`tab-button ${activeTab === 'login' ? 'active' : ''}`}
-              onClick={() => setActiveTab('login')}
+              type="button"
+              onClick={() => setVista('login')}
+              style={{
+                flex: 1,
+                padding: '12px 20px',
+                border: 'none',
+                background: vista === 'login' ? 'white' : 'transparent',
+                color: vista === 'login' ? '#8A2BE2' : '#666',
+                fontWeight: '600',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+                boxShadow: vista === 'login' ? '0 2px 8px rgba(0, 0, 0, 0.08)' : 'none',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                fontFamily: 'Montserrat, sans-serif'
+              }}
+              onMouseEnter={e => {
+                if (vista !== 'login') e.currentTarget.style.color = '#8A2BE2'
+              }}
+              onMouseLeave={e => {
+                if (vista !== 'login') e.currentTarget.style.color = '#666'
+              }}
             >
+              <LogIn size={18} />
               Iniciar Sesión
             </button>
             <button
-              className={`tab-button ${activeTab === 'register' ? 'active' : ''}`}
-              onClick={() => setActiveTab('register')}
+              type="button"
+              onClick={() => setVista('registro')}
+              style={{
+                flex: 1,
+                padding: '12px 20px',
+                border: 'none',
+                background: vista === 'registro' ? 'white' : 'transparent',
+                color: vista === 'registro' ? '#8A2BE2' : '#666',
+                fontWeight: '600',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+                boxShadow: vista === 'registro' ? '0 2px 8px rgba(0, 0, 0, 0.08)' : 'none',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                fontFamily: 'Montserrat, sans-serif'
+              }}
+              onMouseEnter={e => {
+                if (vista !== 'registro') e.currentTarget.style.color = '#8A2BE2'
+              }}
+              onMouseLeave={e => {
+                if (vista !== 'registro') e.currentTarget.style.color = '#666'
+              }}
             >
-              Registrarse
+              <UserPlus size={18} />
+              Registro
             </button>
           </div>
 
-          {mensaje && (
-            <div className={`mensaje ${mensaje.tipo}`}>
-              {mensaje.texto}
-            </div>
+          {/* Formularios */}
+          {vista === 'login' ? (
+            <LoginForm 
+              onSwitch={() => setVista('registro')} 
+              onLogin={handleLogin}
+            />
+          ) : (
+            <RegisterForm 
+              onSwitch={() => setVista('login')}
+              onRegister={handleRegister}
+            />
           )}
-
-          <form onSubmit={handleSubmit}>
-            {activeTab === 'register' && (
-              <div className="form-group">
-                <label className="form-label">Nombre completo</label>
-                <div className="input-wrapper">
-                  <User className="input-icon" size={18} />
-                  <input
-                    type="text"
-                    name="nombre"
-                    value={formData.nombre}
-                    onChange={handleChange}
-                    placeholder="Tu nombre"
-                    className="input-field"
-                  />
-                </div>
-              </div>
-            )}
-
-            <div className="form-group">
-              <label className="form-label">Correo electrónico</label>
-              <div className="input-wrapper">
-                <LogIn className="input-icon" size={18} />
-                <input
-                  type="email"
-                  name="correo"
-                  value={formData.correo}
-                  onChange={handleChange}
-                  placeholder="ejemplo@correo.com"
-                  className="input-field"
-                />
-              </div>
-            </div>
-
-            <div className="form-group">
-              <label className="form-label">Contraseña</label>
-              <div className="input-wrapper">
-                <input
-                  type={mostrarPassword ? 'text' : 'password'}
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  placeholder="••••••••"
-                  className="input-field input-with-toggle"
-                />
-                <button
-                  type="button"
-                  className="toggle-password"
-                  onClick={() => setMostrarPassword(!mostrarPassword)}
-                >
-                  {mostrarPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                </button>
-              </div>
-            </div>
-
-            <button type="submit" className="btn btn-primary">
-              {activeTab === 'login' ? 'Ingresar' : 'Registrarse'}
-            </button>
-          </form>
         </div>
       </div>
     </div>
   )
 }
-
-export default SistemaAutenticacion
-
